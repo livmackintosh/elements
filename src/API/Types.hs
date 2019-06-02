@@ -22,20 +22,14 @@ import Servant.API
 
 type MemberAPI = "members" :> Get '[JSON] [Member]
 
-data Member = Member
-  { name              :: String
-  , age               :: Int
-  , email             :: String
-  , membership_number :: Int
-  , registration_date :: Day
+data Member' a b c d e = Member'
+  { name              :: a
+  , age               :: b 
+  , email             :: c 
+  , membership_number :: d
+  , registration_date :: e
   } deriving (Eq, Show, Generic)
 
-instance ToJSON Member
+type Member = Member' String Int String Int Day
 
-
-members :: [Member]
-members =
-  [ Member "Livvy Mackintosh" 22 "livvy@base.nu" 63114913000000000 (fromGregorian 2017 11 06) ]
-
-server :: Server MemberAPI
-server = return members
+instance ToJSON Member 
